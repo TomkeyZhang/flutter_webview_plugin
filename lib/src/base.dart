@@ -143,7 +143,7 @@ class FlutterWebviewPlugin {
       'supportMultipleWindows': supportMultipleWindows ?? false,
       'appCacheEnabled': appCacheEnabled ?? false,
       'allowFileURLs': allowFileURLs ?? false,
-      'enableMessaging': enableMessaging ?? false,
+      'enableMessaging': enableMessaging ?? true,
     };
 
     if (headers != null) {

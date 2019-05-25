@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'webview_widget.dart';
 
 const kAndroidUserAgent =
     'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36';
 
-String selectedUrl = 'https://flutter.io';
+String selectedUrl = 'https://igc.ndev.imdada.cn/html#/rules';
 
 void main() => runApp(MyApp());
 
@@ -24,45 +25,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (_) => const MyHomePage(title: 'Flutter WebView Demo'),
         '/widget': (_) {
-          return WebviewScaffold(
-            url: selectedUrl,
-            appBar: AppBar(
-              title: const Text('Widget WebView'),
-            ),
-            withZoom: true,
-            withLocalStorage: true,
-            hidden: true,
-            initialChild: Container(
-              color: Colors.redAccent,
-              child: const Center(
-                child: Text('Waiting.....'),
-              ),
-            ),
-            bottomNavigationBar: BottomAppBar(
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back_ios),
-                    onPressed: () {
-                      flutterWebViewPlugin.goBack();
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios),
-                    onPressed: () {
-                      flutterWebViewPlugin.goForward();
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.autorenew),
-                    onPressed: () {
-                      flutterWebViewPlugin.reload();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
+          return WebviewWidget();
         },
       },
     );
@@ -170,11 +133,11 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       }
     });
-
-    _onWebviewMessaged =
-        flutterWebViewPlugin.onWebviewMessage.listen((String message) {
-      print(message);
-    });
+    print('flutterWebViewPlugin.hashCode=${flutterWebViewPlugin.hashCode}');
+//    _onWebviewMessaged =
+//        flutterWebViewPlugin.onWebviewMessage.listen((String message) {
+//      print('message:$message');
+//    });
   }
 
   @override
@@ -189,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _onWebviewMessaged.cancel();
 
     flutterWebViewPlugin.dispose();
-
+    print('dispose');
     super.dispose();
   }
 

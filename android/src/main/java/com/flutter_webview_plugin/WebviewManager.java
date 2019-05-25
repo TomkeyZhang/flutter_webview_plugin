@@ -1,21 +1,25 @@
 package com.flutter_webview_plugin;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,12 +28,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 import static android.app.Activity.RESULT_OK;
-
-import android.webkit.JavascriptInterface;
-import java.net.URLEncoder;
-import java.io.UnsupportedEncodingException;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by lejard_h on 20/12/2017.
@@ -365,6 +363,7 @@ class WebviewManager {
 
         @JavascriptInterface
         public void postMessage(String message) {
+            Log.e("zqt","get msg="+message);
             webviewManager.onMessage(message);
         }
     }
@@ -393,10 +392,12 @@ class WebviewManager {
     }
 
     protected void enableMessaging() {
+        Log.e("zqt","enableMessaging"+webView.getSettings().getJavaScriptEnabled());
         webView.addJavascriptInterface(new JsObject(this), CHANNEL_NAME);
     }
 
     protected void linkBridge() {
+        Log.e("zqt","linkBridge");
         String script = "(" + "window.originalPostMessage = window.postMessage,"
                 + "window.postMessage = function(data) {" + CHANNEL_NAME + ".postMessage(String(data));" + "}" + ")";
 
