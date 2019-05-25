@@ -363,7 +363,7 @@ class WebviewManager {
 
         @JavascriptInterface
         public void postMessage(String message) {
-            Log.e("zqt","get msg="+message);
+//            Log.e("zqt","get msg="+message);
             webviewManager.onMessage(message);
         }
     }
@@ -392,12 +392,12 @@ class WebviewManager {
     }
 
     protected void enableMessaging() {
-        Log.e("zqt","enableMessaging"+webView.getSettings().getJavaScriptEnabled());
+//        Log.e("zqt","enableMessaging"+webView.getSettings().getJavaScriptEnabled());
         webView.addJavascriptInterface(new JsObject(this), CHANNEL_NAME);
     }
 
     protected void linkBridge() {
-        Log.e("zqt","linkBridge");
+//        Log.e("zqt","linkBridge");
         String script = "(" + "window.originalPostMessage = window.postMessage,"
                 + "window.postMessage = function(data) {" + CHANNEL_NAME + ".postMessage(String(data));" + "}" + ")";
 
